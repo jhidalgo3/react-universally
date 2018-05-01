@@ -18,7 +18,8 @@ dev: image
 		-v /usr/src/app/node_modules/ \
 		-p 3000:3000 \
 		-it \
-		$(IMAGE)
+		$(IMAGE) \
+		dev
 
 # `make bash`
 # connects to running docker container and provides bash access

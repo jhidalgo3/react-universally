@@ -20,4 +20,13 @@ COPY . /usr/src/app
 ENV PORT 3000
 EXPOSE 3000
 
-CMD [ "npm", "run", "develop" ]
+# Entrypoint allows for conditional application start commands after the container starts
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# providing both ENTRYPOINT and CMD allows consumers of this Dockerfile to override CMD argument
+# see Makefile: `docker run -<options> <override-argument>`
+ENTRYPOINT ["/entrypoint.sh"]
+
+# here we specify a default, `deploy`, so that EB will execute the deployment case of `entrypoint.sh`
+CMD [ "deploy" ]
